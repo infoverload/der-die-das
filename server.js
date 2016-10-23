@@ -1,20 +1,16 @@
 
-
 var express = require('express');
 var serveStatic = require('serve-static');
 
 var app = express();
+var port = process.env.PORT || 3000;
 
-app.use('/blog', serveStatic('./public'));
-
-app.get('/:routeParameter', function (req, res) {
-  res.send(req.params.routeParameter);
-});
+app.use(serveStatic('./public'));
 
 app.get('*', function (req, res) {
-  res.send('this is not the page you where looking for!');
+  res.send('This is not the page you where looking for!');
 });
 
-app.listen(3000, function () {
-  console.log('server listening in port 3000');
+app.listen(port, function () {
+  console.log('server listening in port', port);
 });
