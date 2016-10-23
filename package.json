@@ -1,0 +1,12 @@
+{
+  "name": "der-die-das-2",
+  "version": "1.0.0",
+  "description": "A simple game made with the Phaser framework (v2.6.2) meant to familiarize players with the German articles.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC"
+}

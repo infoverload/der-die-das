@@ -1,0 +1,39 @@
+<!doctype html> 
+<html lang="en"> 
+<head> 
+	<meta charset="UTF-8" />
+    <meta name="description" content="Der Die Das" />
+    <title>DER DIE DAS</title>
+    <link rel="shortcut icon" href="favicon.png" type="image/x-icon"/>
+
+    <script src="src/phaser-v2.6.2.min.js"></script>
+    <script src="src/Boot.js"></script>
+    <script src="src/Preloader.js"></script>
+    <script src="src/MainMenu.js"></script>
+    <script src="src/StoryHowto.js"></script>
+    <script src="src/Game.js"></script>
+    <style type="text/css">
+        body {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+<script type="text/javascript">
+    (function() {       
+        // initialize the framework
+        var game = new Phaser.Game(800, 640, Phaser.AUTO, 'game'); 
+
+        // add game states
+        game.state.add('Boot', DDD.Boot);
+        game.state.add('Preloader', DDD.Preloader);
+        game.state.add('MainMenu', DDD.MainMenu);
+        game.state.add('StoryHowto', DDD.StoryHowto);
+        game.state.add('Game', DDD.Game);
+        
+        // start the Boot state
+        game.state.start('Boot');
+    })();
+</script>
+</body>
+</html>
