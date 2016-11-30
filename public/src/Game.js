@@ -8,9 +8,8 @@ DDD.Game = function(game) {
 	var lives;
 	var scoreText;
 	var livesText;
+	var articleTitle;
 	var article;
-	var der, die, das;
-	var temp;
 };
 
 // define contents of DDD.Game
@@ -62,82 +61,22 @@ DDD.Game.prototype = {
 	    lives = 5;
 	    livesText = this.add.text(700, 16, 'Lives: 5', { fontSize: '24px', fill: '#B12' });
 
-        // create our word collections
-        der = [ 'Mann', 'Blick', 'Fall', 'Ruf', 'Hof', 'Tod', 'Sinn', 'Weg', 'Vogel', 'Vater' ];
-        der = this.arrayShuffle(der);
-        die = [ 'Frau', 'Arbeit', 'Angst', 'Mutter', 'Erde', 'Fliege', 'Frucht', 'Heimat', 'Kunst', 'Luft' ];
-        die = this.arrayShuffle(die);
-        das = [ 'Auto', 'Amt', 'Bild', 'Ei', 'Ding', 'Dorf', 'Gesetz', 'Herz', 'Leben', 'Spiel' ];
-        das = this.arrayShuffle(das);
+        // create our word collection
+        var wordArr = [{article:'der', word:'Mann'}, {article:'der', word:'Blick'}, {article:'der', word:'Fall'}, {article:'der', word:'Ruf'}, {article:'der', word:'Hof'}, {article:'der', word:'Tod'}, {article:'der', word:'Sinn'}, {article:'der', word:'Weg'}, {article:'der', word:'Vogel'}, {article:'der', word:'Vater'}, {article:'die', word:'Frau'}, {article:'die', word:'Arbeit'}, {article:'die', word:'Angst'}, {article:'die', word:'Mutter'}, {article:'die', word:'Erde'}, {article:'die', word:'Fliege'}, {article:'die', word:'Frucht'}, {article:'die', word:'Heimat'}, {article:'die', word:'Kunst'}, {article:'die', word:'Luft'}, {article:'das', word:'Auto'}, {article:'das', word:'Amt'}, {article:'das', word:'Bild'}, {article:'das', word:'Ei'}, {article:'das', word:'Ding'}, {article:'das', word:'Dorf'}, {article:'das', word:'Gesetz'}, {article:'das', word:'Herz'}, {article:'das', word:'Leben'}, {article:'das', word:'Spiel'}];
+	    wordArr = this.arrayShuffle(wordArr);
 
-        temp = [];
-	   
 	    var num = Math.floor((Math.random() * 3) + 1);  // Randomize one of the articles
 	    if (num == 1) {
-	    	article = this.add.text(DDD.GAME_WIDTH-430, 16, 'DER', { fontSize: '36px', fill: '#DEB' });
-	    	
-	    	// take 5 words from the shuffled DER array and put them in even indices of temp array	    	
-	    	for (var i = 0; i < 9; i++) {
-	    		if (i % 2 == 0) {
-                   temp[i] = der[i];
-                }
-	        } 
-	        // take 3 words from the shuffled DIE array and append them to odd indices of temp array	        
-	    	for (var i = 1; i < 6; i++) {
-                if (i % 2 != 0) {
-                   temp[i] = die[i];
-                }
-	        } 
-	        // take 2 words from the shuffled DAS array and append them to odd indices of temp array	        
-	    	for (var i = 7; i < 10; i++) {
-	    		if (i % 2 != 0) {
-                    temp[i] = das[i];
-                }
-	        } 	       
+	    	articleTitle = this.add.text(DDD.GAME_WIDTH-430, 16, 'DER', { fontSize: '36px', fill: '#DEB' });	
+	    	article = 'der';    	
 	    }
 	    else if (num == 2) {
-	    	article = this.add.text(DDD.GAME_WIDTH-430, 16, 'DIE', { fontSize: '36px', fill: '#DEB' });
-
-	    	// take 5 words from the DIE array and put them in temp array	    	
-	    	for (var i = 0; i < 9; i++) {
-	    		if (i % 2 == 0) {
-                    temp[i] = die[i];
-                }
-	        } 
-	        // take 3 words from DER array and append them to temp array	        
-	    	for (var i = 1; i < 6; i++) {
-	    		if (i % 2 != 0) {
-                    temp[i] = der[i];
-                }
-	        } 
-	        // take 2 words from DAS array and append them to temp array	        
-	    	for (var i = 7; i < 10; i++) {
-	    		if (i % 2 != 0) {
-                    temp[i] = das[i];
-                }
-	        } 	        
+	    	articleTitle = this.add.text(DDD.GAME_WIDTH-430, 16, 'DIE', { fontSize: '36px', fill: '#DEB' });
+	    	article = 'die';  
 	    }
 	    else {
-	        article = this.add.text(DDD.GAME_WIDTH-430, 16, 'DAS', { fontSize: '36px', fill: '#DEB' });
-
-	        // take 5 words from the DAS array and put them in temp array	    	
-	    	for (var i = 0; i < 9; i++) {
-	    		if (i % 2 == 0) {
-                    temp[i] = das[i];
-                }
-	        } 
-	        // take 3 words from DIE array and append them to temp array	        
-	    	for (var i = 1; i < 6; i++) {
-	    		if (i % 2 != 0) {
-                    temp[i] = die[i];
-                }
-	        } 
-	        // take 2 words from DER array and append them to temp array	        
-	    	for (var i = 7; i < 10; i++) {
-	    		if (i % 2 != 0) {
-                    temp[i] = der[i];
-                }
-	        } 	        
+	        articleTitle = this.add.text(DDD.GAME_WIDTH-430, 16, 'DAS', { fontSize: '36px', fill: '#DEB' });
+	        article = 'das';  
 	    }
 
 	    correctHearts = this.add.group(); // the hearts group contains the correct hearts
@@ -145,23 +84,28 @@ DDD.Game.prototype = {
 	    incorrectHearts = this.add.group(); // the hearts group contains the incorrect hearts
 	    incorrectHearts.enableBody = true;   // enable physics for any heart created in this group
 
-	    for (var i = 0; i < 10; i++) {
-
-	    	if (i % 2 == 0) {
-		        var correctHeart = correctHearts.create(i * 79, 0, 'heart'); // create a heart inside of the 'correctHearts' group
-		        var word = this.add.text(i + 22, i + 20, temp[i], { fontSize: '14px', fill: '#222' }, correctHearts);
-		        correctHeart.addChild(word);
-		        correctHeart.body.gravity.y = 300;	        
-		        correctHeart.body.bounce.y = 0.2 + Math.random() * 0.2;  
+        var j = 0;  
+	    for (var i = 0; i < wordArr.length; i++) {
+            if (correctHearts.length < 5) {
+		    	if (wordArr[i].article == article) {
+			        var correctHeart = correctHearts.create(j * 78, 0, 'heart'); // create a heart inside of the 'correctHearts' group
+			        var word = this.add.text(j + 22, j + 20, wordArr[i].word, { fontSize: '14px', fill: '#222' }, correctHearts);
+			        correctHeart.addChild(word);
+			        correctHeart.body.gravity.y = 300;	        
+			        correctHeart.body.bounce.y = 0.2 + Math.random() * 0.2;  
+			        j++;
+		        }
 	        }
-            else {
-		        var incorrectHeart = incorrectHearts.create(i * 79, 0, 'heart'); // create a heart inside of the 'incorrectHearts' group
-		        var word = this.add.text(i + 22, i + 20, temp[i], { fontSize: '14px', fill: '#222' }, incorrectHearts);
-		        incorrectHeart.addChild(word);
-		        incorrectHeart.body.gravity.y = 300;	        
-		        incorrectHeart.body.bounce.y = 0.2 + Math.random() * 0.2;  
+	        if (incorrectHearts.length < 5) {
+	            if (wordArr[i].article !== article) {
+			        var incorrectHeart = incorrectHearts.create(j * 78, 0, 'heart'); // create a heart inside of the 'incorrectHearts' group
+			        var word = this.add.text(j + 22, j + 20, wordArr[i].word, { fontSize: '14px', fill: '#222' }, incorrectHearts);
+			        incorrectHeart.addChild(word);
+			        incorrectHeart.body.gravity.y = 300;	        
+			        incorrectHeart.body.bounce.y = 0.2 + Math.random() * 0.2;  
+			        j++;
+	            }
             }
-
         }
 	    
 	    cursors = this.input.keyboard.createCursorKeys();  // our controls
